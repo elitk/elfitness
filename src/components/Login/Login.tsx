@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography';
 const Login: React.FC = (): JSX.Element => {
   const defaultTheme = createTheme();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({

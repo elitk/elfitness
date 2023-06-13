@@ -12,7 +12,7 @@ const BMI: React.FC = (): JSX.Element => {
   const calcBmiResult = () => {
     const heightInMeters: number = (height as number) / 100;
     const squareHeight: number = heightInMeters * heightInMeters;
-    const bmi: number = (weight as number) / squareHeight;
+    const bmi: any = (weight as number) / squareHeight;
     if (weight === 0 || height === 0) {
       alert('Please fill in the details');
     } else {
