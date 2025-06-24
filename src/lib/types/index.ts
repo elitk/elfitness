@@ -101,4 +101,11 @@ export interface ErrorState {
   hasError: boolean;
   message: string;
   code?: string;
+}
+
+export interface DashboardStats {
+  totalWorkouts: number;
+  weeklyCalories: number;
+  currentStreak: number;
+  monthlyProgress: number;
 } 
