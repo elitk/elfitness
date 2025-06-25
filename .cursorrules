@@ -17,6 +17,7 @@
     - Implement dynamic imports for code splitting and optimization.
     - Use responsive design with a mobile-first approach.
     - Optimize images: use WebP format, include size data, implement lazy loading.
+    - Use "use client" on the top of the file when using client-side states like useState, useEffect, etc.
 
     ### Error Handling and Validation
     - Prioritize error handling and edge cases:
