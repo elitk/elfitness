@@ -26,8 +26,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "light";
-    return (localStorage.getItem(STORAGE_KEY) as Theme) || "light";
+    if (typeof window === "undefined") return "dark";
+    return (localStorage.getItem(STORAGE_KEY) as Theme) || "dark";
   });
 
   useLayoutEffect(() => {

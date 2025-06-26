@@ -74,7 +74,7 @@ export interface ButtonProps {
 export interface InputProps {
   label?: string;
   placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'date';
   value: string;
   onChange: (value: string) => void;
   error?: string;
@@ -108,4 +108,31 @@ export interface DashboardStats {
   weeklyCalories: number;
   currentStreak: number;
   monthlyProgress: number;
+}
+
+/**
+ * Represents a workout session with exercises and metadata.
+ */
+export interface Workout {
+  id: string;
+  userId: string;
+  name: string;
+  date: string;
+  duration: number; // in minutes
+  exercises: Exercise[];
+  calories: number;
+  notes?: string;
+}
+
+/**
+ * Represents a single exercise within a workout.
+ */
+export interface Exercise {
+  name: string;
+  category: string;
+  sets: number;
+  reps: number;
+  weight?: number; // in kg or lbs
+  duration?: number; // in seconds
+  restTime?: number; // in seconds
 } 
