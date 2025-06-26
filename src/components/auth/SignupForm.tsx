@@ -98,12 +98,12 @@ const SignupForm: React.FC = () => {
   }, [user, router]);
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-white dark:bg-surface border-app">
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold text-text-primary mb-2">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-text-primary mb-2">
           Create Account
         </h1>
-        <p className="text-text-secondary">
+        <p className="text-text-secondary dark:text-text-primary">
           Join Elfitness and start your fitness journey
         </p>
       </div>
@@ -171,7 +171,7 @@ const SignupForm: React.FC = () => {
             <div className="w-full border-t border-surface-light" />
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-surface text-text-secondary">Or continue with</span>
+            <span className="px-2 bg-white dark:bg-surface text-gray-500 dark:text-text-primary">Or continue with</span>
           </div>
         </div>
 
@@ -204,7 +204,7 @@ const SignupForm: React.FC = () => {
       </div>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-text-secondary">
+        <p className="text-sm text-gray-500 dark:text-text-primary">
           Already have an account?{' '}
           <a
             href="/auth/login"

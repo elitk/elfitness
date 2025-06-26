@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface StatsCardProps {
   icon: React.ReactNode;
@@ -9,14 +9,13 @@ interface StatsCardProps {
 /**
  * Card for displaying a single dashboard metric.
  */
-const StatsCard: React.FC<StatsCardProps> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-4 p-4 bg-card rounded-lg shadow-sm border border-border">
-    <div className="text-primary">{icon}</div>
-    <div>
-      <div className="text-lg font-semibold">{value}</div>
-      <div className="text-sm text-muted-foreground">{label}</div>
-    </div>
+const StatsCard: React.FC<StatsCardProps> = ({ label, value }) => (
+  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex flex-col items-center">
+    <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      {value}
+    </span>
+    <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
   </div>
 );
 
-export default StatsCard; 
+export default StatsCard;

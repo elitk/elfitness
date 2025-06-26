@@ -8,7 +8,7 @@ interface AuthLayoutProps {
 
 const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
@@ -27,17 +27,17 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
               />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-2">
+          <h1 className="text-3xl font-bold text-background dark:text-text-primary mb-2">
             Elfitness
           </h1>
-          <p className="text-text-secondary">
+          <p className="text-text-secondary dark:text-text-primary">
             Your AI-powered fitness companion
           </p>
         </div>
 
         {children}
         <div className="mt-8 text-center">
-          <p className="text-xs text-text-secondary">
+          <p className="text-xs text-text-secondary dark:text-text-primary">
             By continuing, you agree to our{" "}
             <a
               href="/terms"

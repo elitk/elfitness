@@ -16,7 +16,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const inputId = React.useId();
   
-  const baseClasses = 'w-full px-3 py-2 bg-surface border border-surface-light rounded-lg text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200';
+  const baseClasses = 'w-full px-3 py-2 bg-white dark:bg-surface border border-gray-200 dark:border-app rounded-lg text-gray-900 dark:text-app placeholder-gray-400 dark:placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200';
   const errorClasses = error ? 'border-error focus:ring-error' : '';
   const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
   
@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-text-primary"
+          className="block text-sm font-medium text-gray-900 dark:text-app"
         >
           {label}
           {required && <span className="text-error ml-1">*</span>}

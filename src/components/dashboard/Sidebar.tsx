@@ -73,13 +73,13 @@ const Sidebar: React.FC = () => {
         </Dialog.Root>
       </div>
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-64 h-full bg-card border-r border-border p-4">
+      <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-background border-r border-gray-200 dark:border-app text-gray-900 dark:text-text-primary  dark:text-app min-h-screen p-4">
         <nav className="flex flex-col gap-4">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 p-2 rounded hover:bg-muted transition-colors"
+              className="flex items-center gap-3 p-2 rounded hover:bg-gray-100 dark:hover:bg-surface-light transition-colors text-gray-900 dark:text-text-primary dark:text-app"
             >
               {item.icon}
               <span>{item.label}</span>

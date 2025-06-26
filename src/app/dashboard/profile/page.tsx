@@ -77,7 +77,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-12 bg-card p-6 rounded-lg shadow">
+    <div className="max-w-md mx-auto mt-12 bg-card p-6 rounded-lg shadow dark:bg-surface">
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div>
           <label className="block text-sm font-medium mb-1">Name</label>

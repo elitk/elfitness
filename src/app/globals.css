@@ -1,14 +1,18 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 :root {
   --primary: #0D69F2;
   --primary-dark: #0B5AD6;
   --secondary: #10B981;
   --background: #000000;
+  --white: #ddcccc;
+  --gray-dark: #6a7282;
   --surface: #121417;
   --surface-light: #1A1D21;
   --text-primary: #FFFFFF;
-  --text-secondary: #9CA3AF;
+  --text-secondary: #6a7282;
   --accent: #F59E0B;
   --error: #EF4444;
 }
@@ -28,11 +32,10 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  /* Add more dark mode overrides here if needed */
 }
 
 body {
@@ -84,3 +87,40 @@ body {
 .animate-slide-up {
   animation: slideUp 0.3s ease-out;
 }
+
+
+/* :root {
+  --primary: #0D69F2;
+  --primary-dark: #0B5AD6;
+  --secondary: #10B981;
+  --background: #000000;
+  --white: #ffffff;
+  --surface: #121417;
+  --surface-light: #1A1D21;
+  --text-primary: #FFFFFF;
+  --text-secondary: #6a7282;
+  --accent: #F59E0B;
+  --error: #EF4444;
+} */
+ /* Utility classes for color theming */
+.bg-app { background: var(--background) !important; }
+.bg-surface { background: var(--surface) !important; }
+.bg-surface-light { background: var(--surface-light) !important; }
+.bg-primary { background: var(--primary) !important; }
+.bg-primary-dark { background: var(--primary-dark) !important; }
+.bg-secondary { background: var(--secondary) !important; }
+.bg-accent { background: var(--accent) !important; }
+.bg-error { background: var(--error) !important; }
+
+.text-app { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-primary { color: var(--primary) !important; }
+.text-primary-dark { color: var(--primary-dark) !important; }
+.text-accent { color: var(--accent) !important; }
+.text-error { color: var(--error) !important; }
+
+.border-app { border-color: var(--surface-light) !important; }
+.border-surface { border-color: var(--surface) !important; }
+.border-primary { border-color: var(--primary) !important; }
+.border-secondary { border-color: var(--secondary) !important; }
+.border-error { border-color: var(--error) !important; } 

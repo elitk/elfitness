@@ -10,7 +10,7 @@ interface UserProfileProps {
  * User profile summary for dashboard sidebar or modal.
  */
 const UserProfile: React.FC<UserProfileProps> = ({ name, email, avatarUrl }) => (
-  <div className="flex items-center gap-3 p-2">
+  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 flex flex-col items-center">
     <img
       src={avatarUrl || '/default-avatar.webp'}
       alt={name}
@@ -19,10 +19,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ name, email, avatarUrl }) => 
       width={40}
       height={40}
     />
-    <div>
-      <div className="font-medium">{name}</div>
-      <div className="text-xs text-muted-foreground">{email}</div>
-    </div>
+    <h3 className="mt-4 text-xl font-bold text-gray-900 dark:text-gray-100">{name}</h3>
+    <p className="text-sm text-gray-500 dark:text-gray-400">{email}</p>
   </div>
 );
 

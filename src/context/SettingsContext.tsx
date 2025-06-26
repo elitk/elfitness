@@ -1,34 +1,46 @@
-'use client';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+"use client";
+import React, {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from "react";
 
-type Theme = 'light' | 'dark' | 'system';
+type Theme = "light" | "dark";
+const STORAGE_KEY = "theme-pref";
+
+/** Toggle helper */
+export const oppositeTheme = (t: Theme): Theme =>
+  t === "light" ? "dark" : "light";
 
 interface SettingsContextValue {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
 
-const SettingsContext = createContext<SettingsContextValue | undefined>(undefined);
+const SettingsContext = createContext<SettingsContextValue | undefined>(
+  undefined
+);
 
-const getInitialTheme = (): Theme => {
-  if (typeof window === 'undefined') return 'system';
-  return (localStorage.getItem('theme') as Theme) || 'system';
-};
+export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
+    return (localStorage.getItem(STORAGE_KEY) as Theme) || "light";
+  });
 
-export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<Theme>(getInitialTheme);
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-    const root = window.document.documentElement;
-    if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
   }, [theme]);
 
-  const setTheme = (t: Theme) => setThemeState(t);
+  const setTheme = (t: Theme) => {
+    console.log("here", t)
+    localStorage.setItem(STORAGE_KEY, t);
+    setThemeState(oppositeTheme(t));
+  };
 
   return (
     <SettingsContext.Provider value={{ theme, setTheme }}>
@@ -39,6 +51,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 export const useSettings = () => {
   const ctx = useContext(SettingsContext);
-  if (!ctx) throw new Error('useSettings must be used within a SettingsProvider');
+  if (!ctx)
+    throw new Error("useSettings must be used within a SettingsProvider");
   return ctx;
-}; 
+};
