@@ -36,10 +36,9 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     else root.classList.remove("dark");
   }, [theme]);
 
-  const setTheme = (t: Theme) => {
-    console.log("here", t)
-    localStorage.setItem(STORAGE_KEY, t);
-    setThemeState(oppositeTheme(t));
+  const setTheme = (newTheme: Theme) => {
+    localStorage.setItem(STORAGE_KEY, newTheme);
+    setThemeState(newTheme);
   };
 
   return (

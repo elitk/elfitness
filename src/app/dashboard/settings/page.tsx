@@ -1,9 +1,5 @@
-import SettingsModal from '@/components/dashboard/SettingsModal';
+import SettingsPage from '@/components/dashboard/SettingsPage';
 
-const SettingsPage = () => (
-  <div className="flex justify-center items-center min-h-[60vh]">
-    <SettingsModal />
-  </div>
-);
+const Settings = () => <SettingsPage />;
 
-export default SettingsPage; 
+export default Settings; 
