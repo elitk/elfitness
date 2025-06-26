@@ -70,7 +70,11 @@ const DashboardPage = () => {
             <Button className="h-16 text-lg">
               Start Workout
             </Button>
-            <Button variant="secondary" className="h-16 text-lg">
+            <Button 
+              variant="secondary" 
+              className="h-16 text-lg"
+              onClick={() => window.location.href = '/dashboard/nutrition'}
+            >
               Log Nutrition
             </Button>
           </div>

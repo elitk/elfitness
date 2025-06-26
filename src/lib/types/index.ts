@@ -135,4 +135,152 @@ export interface Exercise {
   weight?: number; // in kg or lbs
   duration?: number; // in seconds
   restTime?: number; // in seconds
+}
+
+// Nutrition tracking types
+export interface MacroNutrients {
+  protein: number;
+  carbs: number;
+  fat: number;
+  fiber: number;
+  sugar: number;
+}
+
+export interface Micronutrients {
+  sodium?: number;
+  potassium?: number;
+  calcium?: number;
+  iron?: number;
+  vitaminC?: number;
+  vitaminD?: number;
+}
+
+export interface FoodItem {
+  id: string;
+  name: string;
+  brand?: string;
+  barcode?: string;
+  servingSize: number;
+  servingUnit: string;
+  caloriesPerServing: number;
+  macros: MacroNutrients;
+  micros?: Micronutrients;
+  category: string;
+  isCustom: boolean;
+  userId?: string; // For custom foods
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface FoodEntry {
+  id: string;
+  foodId: string;
+  foodName: string;
+  servings: number;
+  calories: number;
+  macros: MacroNutrients;
+  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  timestamp: Date;
+}
+
+export interface Meal {
+  id: string;
+  type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  foods: FoodEntry[];
+  totalCalories: number;
+  totalMacros: MacroNutrients;
+}
+
+export interface NutritionEntry {
+  id: string;
+  userId: string;
+  date: Date;
+  meals: Meal[];
+  totalCalories: number;
+  macros: MacroNutrients;
+  waterIntake: number; // in ml
+  notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface NutritionGoals {
+  id: string;
+  userId: string;
+  dailyCalories: number;
+  macroTargets: MacroNutrients;
+  waterIntake: number; // in ml
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface MealPlan {
+  id: string;
+  userId: string;
+  name: string;
+  description?: string;
+  startDate: Date;
+  endDate: Date;
+  meals: {
+    [key: string]: { // date string
+      breakfast: string[]; // food IDs
+      lunch: string[];
+      dinner: string[];
+      snacks: string[];
+    };
+  };
+  totalCalories: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface WaterEntry {
+  id: string;
+  userId: string;
+  amount: number; // in ml
+  timestamp: Date;
+}
+
+export interface NutritionStats {
+  avgDailyCalories: number;
+  avgDailyProtein: number;
+  avgDailyCarbs: number;
+  avgDailyFat: number;
+  avgWaterIntake: number;
+  calorieGoalProgress: number; // percentage
+  macroGoalProgress: {
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
+  streak: number; // days of meeting goals
+}
+
+// Form types for nutrition
+export interface FoodSearchQuery {
+  query: string;
+  barcode?: string;
+  category?: string;
+  limit?: number;
+}
+
+export interface AddFoodFormData {
+  foodId: string;
+  servings: number;
+  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+}
+
+export interface CustomFoodFormData {
+  name: string;
+  brand?: string;
+  servingSize: number;
+  servingUnit: string;
+  caloriesPerServing: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  fiber: number;
+  sugar: number;
+  category: string;
 } 
