@@ -4,10 +4,13 @@ import React, { useState } from "react";
 import Card from "@/components/ui/Card";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { Exercise } from "@/lib/types";
+import { Exercise, Workout } from "@/lib/types";
 import { z } from "zod";
 import { ExerciseEntry } from './index';
 import { ExerciseLibrary } from '../exercise';
+import { useAuth } from '@/hooks/useAuth';
+import { useWorkouts } from '@/hooks/useWorkouts';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const exerciseSchema = z.object({
   name: z.string().min(2, 'Exercise name required'),
@@ -30,6 +33,9 @@ const workoutSchema = z.object({
 type WorkoutFormData = z.infer<typeof workoutSchema>;
 
 const WorkoutForm: React.FC = () => {
+  const { user } = useAuth();
+  const { addWorkout, status, error: workoutError, clearError } = useWorkouts(user?.uid);
+  const isCreating = status === 'creating';
   const [formData, setFormData] = useState<WorkoutFormData>({
     name: "",
     date: new Date().toISOString().slice(0, 10),
@@ -39,10 +45,20 @@ const WorkoutForm: React.FC = () => {
   });
   const [errors, setErrors] = useState<Partial<Record<keyof WorkoutFormData, string>>>({});
   const [libraryOpen, setLibraryOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const calculateCalories = (duration: number, exercises: Exercise[]): number => {
+    // Simple calculation: base calories per minute + exercise intensity
+    const baseCaloriesPerMinute = 8; // Base metabolic rate during exercise
+    const exerciseMultiplier = exercises.length > 0 ? exercises.length * 0.5 : 1;
+    return Math.round(duration * baseCaloriesPerMinute * exerciseMultiplier);
+  };
 
   const handleChange = (field: keyof WorkoutFormData, value: unknown) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+    if (workoutError) clearError();
+    if (successMessage) setSuccessMessage(null);
   };
 
   const validate = () => {
@@ -59,10 +75,35 @@ const WorkoutForm: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    // Submission logic will go here
+    if (!validate() || !user) return;
+
+    const calories = calculateCalories(formData.duration, formData.exercises);
+    
+    const workoutData: Omit<Workout, 'id'> = {
+      userId: user.uid,
+      name: formData.name,
+      date: formData.date,
+      duration: formData.duration,
+      exercises: formData.exercises,
+      calories,
+      ...(formData.notes?.trim() && { notes: formData.notes.trim() }),
+    };
+
+    const workoutId = await addWorkout(workoutData);
+    
+    if (workoutId) {
+      setSuccessMessage(`Workout "${formData.name}" saved successfully!`);
+      // Reset form
+      setFormData({
+        name: "",
+        date: new Date().toISOString().slice(0, 10),
+        duration: 0,
+        notes: "",
+        exercises: [],
+      });
+    }
   };
 
   const handleExerciseChange = (idx: number, updated: Exercise) => {
@@ -101,8 +142,19 @@ const WorkoutForm: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-xl mx-auto bg-white dark:bg-surface text-gray-900 dark:text-white border-app">
+    <Card className="w-full max-w-xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700">
       <form onSubmit={handleSubmit} className="space-y-4">
+        {successMessage && (
+          <div className="p-3 bg-green-100 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg">
+            <p className="text-sm text-green-800 dark:text-green-200">{successMessage}</p>
+          </div>
+        )}
+
+        {workoutError && (
+          <div className="p-3 bg-red-100 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg">
+            <p className="text-sm text-red-800 dark:text-red-200">{workoutError}</p>
+          </div>
+        )}
         <Input
           label="Workout Name"
           placeholder="e.g. Push Day"
@@ -163,9 +215,22 @@ const WorkoutForm: React.FC = () => {
             <div className="text-error text-xs mb-2">{errors.exercises}</div>
           )}
         </div>
-        <Button type="submit" className="w-full">
-          Save Workout
+        <Button type="submit" className="w-full" disabled={isCreating || !user}>
+          {isCreating ? (
+            <>
+              <LoadingSpinner size="sm" />
+              <span className="ml-2">Saving Workout...</span>
+            </>
+          ) : (
+            'Save Workout'
+          )}
         </Button>
+
+        {!user && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+            Please log in to save workouts
+          </p>
+        )}
       </form>
     </Card>
   );
