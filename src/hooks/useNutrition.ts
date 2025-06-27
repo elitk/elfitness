@@ -191,7 +191,11 @@ export const useWaterTracking = (userId: string | undefined, date: Date) => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchWaterEntries = useCallback(async () => {
-    if (!userId) return;
+    if (!userId) {
+      setLoading(false);
+      setWaterEntries([]);
+      return;
+    }
     
     try {
       setLoading(true);

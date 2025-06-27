@@ -49,12 +49,6 @@ export const nutritionAPI = {
   // Get nutrition entry for a specific date
   async getNutritionEntry(userId: string, date: Date): Promise<NutritionEntry | null> {
     try {
-      // For development, return null (no existing entries)
-      if (process.env.NODE_ENV === 'development') {
-        return null;
-      }
-
-      // Production Firestore logic
       const dateString = date.toISOString().split('T')[0];
       const q = query(
         collection(db, COLLECTIONS.NUTRITION_ENTRIES),
@@ -113,12 +107,6 @@ export const nutritionAPI = {
   // Create or update nutrition entry
   async saveNutritionEntry(entry: Omit<NutritionEntry, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
     try {
-      // For development, just return a mock ID
-      if (process.env.NODE_ENV === 'development') {
-        return `nutrition-${Date.now()}`;
-      }
-
-      // Production Firestore logic
       const dateString = entry.date.toISOString().split('T')[0];
       
       // Check if entry exists for this date
@@ -363,41 +351,6 @@ export const waterAPI = {
   // Get water entries for a date
   async getWaterEntries(userId: string, date: Date): Promise<WaterEntry[]> {
     try {
-      // For development, use mock data
-      if (process.env.NODE_ENV === 'development') {
-        const now = new Date();
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const targetDate = new Date(date);
-        targetDate.setHours(0, 0, 0, 0);
-        
-        // Only return entries for today in development
-        if (targetDate.getTime() === today.getTime()) {
-          return [
-            {
-              id: 'water-1',
-              userId,
-              amount: 250,
-              timestamp: new Date(now.getTime() - 3 * 60 * 60 * 1000), // 3 hours ago
-            },
-            {
-              id: 'water-2',
-              userId,
-              amount: 500,
-              timestamp: new Date(now.getTime() - 1 * 60 * 60 * 1000), // 1 hour ago
-            },
-            {
-              id: 'water-3',
-              userId,
-              amount: 350,
-              timestamp: new Date(now.getTime() - 30 * 60 * 1000), // 30 minutes ago
-            },
-          ];
-        }
-        return [];
-      }
-
-      // Production Firestore logic
       const startOfDay = new Date(date);
       startOfDay.setHours(0, 0, 0, 0);
       const endOfDay = new Date(date);
@@ -427,12 +380,6 @@ export const waterAPI = {
   // Add water entry
   async addWaterEntry(userId: string, amount: number): Promise<string> {
     try {
-      // For development, just return a mock ID (in real app, this would update local state)
-      if (process.env.NODE_ENV === 'development') {
-        return `water-${Date.now()}`;
-      }
-
-      // Production Firestore logic
       const docRef = await addDoc(collection(db, COLLECTIONS.WATER_ENTRIES), {
         userId,
         amount,
