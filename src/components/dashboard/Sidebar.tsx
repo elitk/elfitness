@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Home, User, Settings, Menu, LogOut, Dumbbell, Apple } from "lucide-react";
+import { Home, User, Settings, Menu, LogOut, Dumbbell, Apple, Brain } from "lucide-react";
 import Link from "next/link";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui";
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: <Home size={20} /> },
   { href: "/dashboard/workouts", label: "Workouts", icon: <Dumbbell size={20} /> },
   { href: "/dashboard/nutrition", label: "Nutrition", icon: <Apple size={20} /> },
+  { href: "/dashboard/ai-coach", label: "AI Coach", icon: <Brain size={20} /> },
   { href: "/dashboard/profile", label: "Profile", icon: <User size={20} /> },
   {
     href: "/dashboard/settings",

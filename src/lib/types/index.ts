@@ -284,3 +284,44 @@ export interface CustomFoodFormData {
   sugar: number;
   category: string;
 } 
+// MCP types
+export interface MCPTool {
+  name: string;
+  description: string;
+  parameters: any;
+  function: (params: any, userId: string) => Promise<any>;
+}
+
+export interface ToolCall {
+  tool_name: string;
+  parameters: Record<string, any>;
+}
+
+// Basic types for AI Coach functionality
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+  isLoading?: boolean;
+  error?: string;
+}
+
+export interface ChatState {
+  messages: ChatMessage[];
+  isLoading: boolean;
+  error: string | null;
+  isConnected: boolean;
+}
+
+export interface AIResponse {
+  content: string;
+  context?: {
+    tokensUsed: number;
+    processingTime: number;
+    toolsExecuted: number;
+  };
+  suggestions?: string[];
+  followUp?: string[];
+}
